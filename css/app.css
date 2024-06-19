@@ -1,0 +1,38 @@
+:not(:defined) {
+  visibility: hidden;
+}
+
+html {
+  font-family: 'MiSans';
+}
+
+mdui-navigation-bar {
+  padding-bottom: 12px;
+}
+
+.container-c {
+  display: flex;
+  flex-direction: column;
+  width: 88vw;
+  height: 88vh;
+  overflow: hidden;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+}
+
+#fullscreen-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 114514;
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  pointer-events: none;
+}
+
+#fullscreen-cover.hidden {
+  opacity: 0;
+}

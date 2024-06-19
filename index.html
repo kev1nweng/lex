@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="zh" class="mdui-theme-auto">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>秘符灵匣 Myphlex</title>
+  <link rel="manifest" href="/manifest.json" />
+  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
+  <link rel="stylesheet" href="./css/app.css?v=0x00" />
+  <link rel="stylesheet" crossorigin="anonymous"
+    href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css" />
+  <link rel="stylesheet" crossorigin="anonymous"
+    href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css" />
+  <link href="https://fonts.font.im/icon?family=Material+Icons+Round" rel="stylesheet" />
+  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+  <script defer src="./js/app.js?v=0x00"></script>
+</head>
+
+<body>
+  <mdui-card id="fullscreen-cover"></mdui-card>
+  <div class="mdui-prose container-c">
+    <h1>Myphlex</h1>
+    <mdui-text-field variant="outlined" id="password-input" label="密码 ID" helper="*不区分大小写。" clearable helper-on-focus>
+      <mdui-button-icon slot="end-icon" icon="link--rounded"></mdui-button-icon>
+    </mdui-text-field>
+    <mdui-button variant="filled" end-icon="done--rounded">获取密码</mdui-button>
+  </div>
+  <mdui-navigation-bar id="navigation-bar" label-visibility="selected">
+    <mdui-navigation-bar-item icon="shield--rounded" value="home">授权</mdui-navigation-bar-item>
+    <mdui-navigation-bar-item icon="key--rounded" value="password">密码器</mdui-navigation-bar-item>
+    <mdui-navigation-bar-item icon="info--rounded" value="about">关于</mdui-navigation-bar-item>
+  </mdui-navigation-bar>
+</body>
+
+</html>
