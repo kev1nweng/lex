@@ -10,6 +10,29 @@ mdui-navigation-bar {
   padding-bottom: 12px;
 }
 
+mdui-text-field {
+  margin-bottom: 12px;
+}
+
+.ads {
+  font-weight: bold !important;
+  font-size: large !important;
+  color: #ffffff !important;
+  background-color: red !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  z-index: 114515;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  display: none;
+}
+
 .container-c {
   display: flex;
   flex-direction: column;
@@ -19,6 +42,10 @@ mdui-navigation-bar {
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+}
+
+.crypto {
+  font-family: 'JetBrains Mono', 'Consolas', 'Menlo', 'Courier New', monospace;
 }
 
 #fullscreen-cover {

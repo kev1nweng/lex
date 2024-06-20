@@ -2,5 +2,7 @@
   "name": "秘符灵匣",
   "short_name": "秘符灵匣",
   "start_url": ".",
-  "display": "standalone"
+  "display": "standalone",
+  "background_color": "#111",
+  "theme_color": "#111"
 }
