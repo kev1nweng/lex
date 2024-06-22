@@ -2,12 +2,20 @@
   visibility: hidden;
 }
 
-html {
-  font-family: 'MiSans';
+:root {
+  --content-width: 88vw;
+  --color-picker: #8686863f;
 }
 
-mdui-navigation-bar {
-  padding-bottom: 12px;
+html {
+  font-family: 'MiSans';
+  -webkit-user-drag: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+body {
+  overflow: hidden !important;
 }
 
 mdui-text-field {
@@ -33,15 +41,35 @@ mdui-text-field {
   display: none;
 }
 
+.container-lt {
+  position: fixed;
+  top: calc((100vw - var(--content-width)) / 2);
+  left: calc((100vw - var(--content-width)) / 2);
+  width: auto;
+}
+
+.container-rt {
+  position: fixed;
+  top: calc((100vw - var(--content-width)) / 2);
+  right: calc((100vw - var(--content-width)) / 2);
+  width: auto;
+}
+
 .container-c {
   display: flex;
   flex-direction: column;
-  width: 88vw;
-  height: 88vh;
+  width: var(--content-width);
+  height: 86vh;
   overflow: hidden;
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+}
+
+.dialog-line {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
 }
 
 .crypto {
@@ -56,7 +84,7 @@ mdui-text-field {
   height: 100%;
   z-index: 114514;
   opacity: 1;
-  transition: opacity 0.5s ease-out;
+  transition: opacity 0.5s cubic-bezier(0.79, 0, 0.15, 1);
   pointer-events: none;
 }
 

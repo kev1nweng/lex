@@ -1,58 +1,195 @@
 <!DOCTYPE html>
 <html lang="zh" class="mdui-theme-auto">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge
+    <title>秘符灵匣 Myphlex</title>
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
+    <link rel="stylesheet" href="./css/app.css?v=0x00" />
+    <link
+      rel="stylesheet"
+      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css"
+    />
+    <link
+      rel="stylesheet"
+      crossorigin="anonymous"
+      href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css"
+    />
+    <link
+      href="https://fonts.font.im/icon?family=Material+Icons+Round"
+      rel="stylesheet"
+    />
+    <meta
+      id="themeColor"
+      name="theme-color"
+      content="var(--mdui-color-background)"
+    />
+    <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
+    <script defer src="/js/main.js?v=0x00" type="module"></script>
+    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>秘符灵匣 Myphlex</title>
-  <link rel="manifest" href="/manifest.json" />
-  <link rel="stylesheet" href="https://unpkg.com/mdui@2/mdui.css" />
-  <link rel="stylesheet" href="./css/app.css?v=0x00" />
-  <link rel="stylesheet" crossorigin="anonymous"
-    href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css" />
-  <link rel="stylesheet" crossorigin="anonymous"
-    href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css" />
-  <link href="https://fonts.font.im/icon?family=Material+Icons+Round" rel="stylesheet" />
-  <script src="https://unpkg.com/mdui@2/mdui.global.js"></script>
-  <script defer src="/js/main.js?v=0x00" type="module"></script>
-</head>
-
-<body>
-  <div class="ads">广告位招租</div>
-  <mdui-card id="fullscreen-cover"></mdui-card>
-  <mdui-snackbar id="submit-msg-fail" placement="top" closeable>
-    <mdui-button slot="action" variant="text">重试</mdui-button>
-    秘符错误或服务器不在线
-  </mdui-snackbar>
-  <mdui-snackbar id="pwdcopy-msg" placement="top" closeable>密码: **** 已复制到剪贴板</mdui-snackbar>
-  <div id="authenticator-tab" class="mdui-prose container-c">
-    <h1>时间秘符<b>授权</b></h1>
-    <span id="clock" class="crypto" style="margin-bottom: 36px; margin-top: -48px;">
-      00.00.00 00:00:00
-    </span>
-    <mdui-text-field type="password" variant="outlined" id="secret-input" label="动态密码" helper="　" clearable
-      helper-on-focus>
-      <mdui-button-icon slot="end-icon" icon="lock--rounded"></mdui-button-icon>
-    </mdui-text-field>
-    <mdui-button id="submit-button" variant="filled" end-icon="done--rounded">提交</mdui-button>
-  </div>
-  <div id="password-tab" class="mdui-prose container-c">
-    <h1>灵匣<b>密码器</b></h1>
-    <mdui-text-field variant="outlined" id="password-input" label="密码 ID" helper="不区分大小写。" clearable helper-on-focus>
-      <mdui-button-icon slot="end-icon" icon="link--rounded"></mdui-button-icon>
-    </mdui-text-field>
-    <mdui-button id="getpwd-button" variant="filled" end-icon="done--rounded">获取密码</mdui-button>
-  </div>
-  <div id="about-tab" class="mdui-prose container-c">
-    <h1 style="text-align: center;"><b>关于</b><br /><br />秘符灵匣<br />Myphlex</h1>
-    <mdui-divider></mdui-divider>
-    <span>Version α0.1.0</span>
-  </div>
-  <mdui-navigation-bar id="navigation-bar" label-visibility="selected">
-    <mdui-navigation-bar-item icon="shield--rounded" value="authenticator">授权</mdui-navigation-bar-item>
-    <mdui-navigation-bar-item icon="key--rounded" value="password">密码器</mdui-navigation-bar-item>
-    <mdui-navigation-bar-item icon="info--rounded" value="about">关于</mdui-navigation-bar-item>
-  </mdui-navigation-bar>
-</body>
-
+  <body>
+    <div class="ads">广告位招租</div>
+    <mdui-card id="fullscreen-cover"></mdui-card>
+    <mdui-dialog class="mdui-prose" id="settings-dialog" close-on-overlay-click>
+      <h3>自定义主题色</h3>
+      <div class="dialog-line">
+        <mdui-text-field
+          style="width: 100vw !important"
+          variant="outlined"
+          id="settings-accent-color-input"
+          label="颜色 HEX"
+          helper="不支持 RGB 值。"
+          prefix="#"
+          maxlength="6"
+          counter
+          clearable
+        ></mdui-text-field>
+        <mdui-button-icon
+          style="width: 56px !important; height: 56px; font-size: xx-large"
+          id="settings-accent-color-button"
+          variant="tonal"
+          icon="done--rounded"
+        ></mdui-button-icon>
+      </div>
+    </mdui-dialog>
+    <mdui-snackbar
+      id="submit-msg-fail"
+      placement="top"
+      closeable
+      close-on-outside-click
+    >
+      <mdui-button id="resubmit-action" slot="action" variant="text"
+        >重试</mdui-button
+      >
+      秘符错误或服务器不在线
+    </mdui-snackbar>
+    <mdui-snackbar
+      id="pwdcopy-msg"
+      placement="top"
+      closeable
+      close-on-outside-click
+      >密码: **** 已复制到剪贴板</mdui-snackbar
+    >
+    <div class="mdui-prose container-lt">
+      <mdui-button
+        variant="elevated"
+        id="status-indicator"
+        icon="cast--rounded"
+        loading
+        >秘符：正在连接</mdui-button
+      >
+    </div>
+    <mdui-card variant="elevated">
+      <div class="mdui-prose container-rt">
+        <mdui-button-icon
+          id="reload-button"
+          variant=""
+          icon="refresh--rounded"
+        ></mdui-button-icon>
+        <mdui-button-icon
+          variant=""
+          id="settings-button"
+          icon="colorize--rounded"
+        ></mdui-button-icon>
+        <mdui-button-icon
+          variant=""
+          id="eruda-button"
+          icon="code--rounded"
+        ></mdui-button-icon>
+      </div>
+    </mdui-card>
+    <div id="authenticator-tab" class="mdui-prose container-c">
+      <h1>时间秘符<b>授权</b></h1>
+      <span
+        id="clock"
+        class="crypto"
+        style="margin-bottom: 36px; margin-top: -48px"
+      >
+        00.00.00 00:00:00
+      </span>
+      <mdui-text-field
+        type="password"
+        variant="outlined"
+        id="secret-input"
+        label="动态密码"
+        helper="　"
+        clearable
+        helper-on-focus
+        toggle-password
+      ></mdui-text-field>
+      <mdui-button
+        id="submit-button"
+        variant="filled"
+        end-icon="done--rounded"
+        disabled
+        >提交</mdui-button
+      >
+    </div>
+    <div id="password-tab" class="mdui-prose container-c">
+      <mdui-snackbar
+        id="srvdown-msg"
+        placement="top"
+        closeable
+        close-on-outside-click
+        >无法连接到服务器。请点击刷新按钮重试。</mdui-snackbar
+      >
+      <h1>灵匣<b>密码器</b></h1>
+      <mdui-text-field
+        variant="outlined"
+        id="password-input"
+        label="密码 ID"
+        maxlength="64"
+        helper="不区分大小写。"
+        clearable
+        helper-on-focus
+        counter
+      >
+        <mdui-button-icon
+          slot="end-icon"
+          icon="link--rounded"
+        ></mdui-button-icon>
+      </mdui-text-field>
+      <div style="display: flex; gap: 12px">
+        <mdui-button-icon
+          id="copy-button"
+          variant="tonal"
+          icon="copy-all--rounded"
+          disabled
+        ></mdui-button-icon>
+        <mdui-button
+          id="getpwd-button"
+          variant="filled"
+          end-icon="done--rounded"
+          disabled
+          >获取密码</mdui-button
+        >
+      </div>
+    </div>
+    <div id="about-tab" class="mdui-prose container-c">
+      <h1 style="text-align: center">
+        <b>关于</b><br /><br />秘符灵匣<br />Myphlex
+      </h1>
+      <mdui-divider></mdui-divider>
+      <span>Version α0.1.0</span>
+    </div>
+    <mdui-navigation-bar id="navigation-bar" label-visibility="selected">
+      <mdui-navigation-bar-item icon="shield--rounded" value="authenticator"
+        >授权</mdui-navigation-bar-item
+      >
+      <mdui-navigation-bar-item icon="key--rounded" value="password"
+        >密码器</mdui-navigation-bar-item
+      >
+      <mdui-navigation-bar-item icon="info--rounded" value="about"
+        >关于</mdui-navigation-bar-item
+      >
+    </mdui-navigation-bar>
+  </body>
 </html>

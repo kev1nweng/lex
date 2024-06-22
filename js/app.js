@@ -1,23 +1,47 @@
+import { api } from "./api.js";
+import { msg } from "./msg.js";
+
 export const app = {
   elems: {
     fullscreenCover: document.getElementById("fullscreen-cover"),
     navigationBar: document.getElementById("navigation-bar"),
+    settingsDialog: document.getElementById("settings-dialog"),
     passwordTab: document.getElementById("password-tab"),
     aboutTab: document.getElementById("about-tab"),
     authenticatorTab: document.getElementById("authenticator-tab"),
     clock: document.getElementById("clock"),
+    reloadButton: document.getElementById("reload-button"),
+    settingsButton: document.getElementById("settings-button"),
+    erudaButton: document.getElementById("eruda-button"),
+    resubmitAction: document.getElementById("resubmit-action"),
+    copyButton: document.getElementById("copy-button"),
+    passwordInput: document.getElementById("password-input"),
     secretInput: document.getElementById("secret-input"),
     pwdcopyMsg: document.getElementById("pwdcopy-msg"),
     submitMsgFail: document.getElementById("submit-msg-fail"),
+    srvdownMsg: document.getElementById("srvdown-msg"),
     submitButton: document.getElementById("submit-button"),
     getpwdButton: document.getElementById("getpwd-button"),
+    statusIndicator: document.getElementById("status-indicator"),
+    settingsAccentColorInput: document.getElementById(
+      "settings-accent-color-input"
+    ),
+    setttingsAccentColorButton: document.getElementById(
+      "settings-accent-color-button"
+    ),
   },
   specs: {
     then: null,
     token: null,
     host: null,
     tokenExpireTime: null,
+    expiryFormated: null,
     leaving: null,
+    isiOSDevice:
+      (navigator.userAgent.includes("iPhone OS") ||
+        navigator.userAgent.includes("iPad OS") ||
+        navigator.userAgent.includes("Mac OS X")) &&
+      (!navigator.userAgent.includes("Mac OS X") || true), // debug
   },
   utils: {
     to2Digits: function (num) {
@@ -37,23 +61,69 @@ export const app = {
     }
     requestAnimationFrame(app.timeAnimator);
   },
+  updateServerStatus(state) {
+    if (state) {
+      const onlineState = "秘符：在线";
+      this.elems.statusIndicator.removeAttribute("loading");
+      this.elems.statusIndicator.setAttribute("icon", "cast--rounded");
+      this.elems.statusIndicator.style.color = "";
+      this.elems.statusIndicator.onclick = async () => {
+        await mdui.confirm({
+          headline: `秘符已连接`,
+          description: `认证状态：${
+            this.specs.token ? "是" : "否"
+          }⠀会话剩余时间：${this.specs.expiryFormated ?? "无"}`,
+          confirmText: "注销会话",
+          cancelText: "取消",
+          onConfirm: async () => {
+            if (await api.reset()) {
+              this.specs.token = null;
+              this.specs.tokenExpireTime = null;
+              this.specs.expiryFormated = null;
+              this.updateServerStatus(await api.ping());
+              mdui.snackbar({
+                message: "会话已注销",
+                closeable: true,
+                closeOnOutsideClick: true,
+                placement: "top",
+              });
+            }
+          },
+          oncancel: () => {
+            return;
+          },
+        });
+      };
+      this.elems.passwordTab.open = true;
+      msg.info(`Updated server status with token "${this.specs.token}"`);
+      const authState = this.specs.token ? "已认证" : "未认证";
+      this.elems.statusIndicator.innerText = `${onlineState} (${authState})`;
+    } else {
+      this.elems.statusIndicator.innerText = "秘符：离线";
+      this.elems.statusIndicator.removeAttribute("loading");
+      this.elems.statusIndicator.setAttribute("icon", "close--rounded");
+      this.elems.statusIndicator.style.color = "crimson";
+      this.elems.statusIndicator.onclick = () => {
+        this.elems.srvdownMsg.open = true;
+      };
+    }
+  },
   updateTime() {
-    if (app.specs.token) {
-      if (!app.specs.tokenExpireTime) {
+    if (this.specs.token) {
+      if (!this.specs.tokenExpireTime) {
         const expiry = 10 * 60 * 1000;
-        app.specs.tokenExpireTime = new Date(Date.now() + expiry);
+        this.specs.tokenExpireTime = new Date(Date.now() + expiry);
       } else {
         const now = new Date();
-        const timeLeft = app.specs.tokenExpireTime - now;
+        const timeLeft = this.specs.tokenExpireTime - now;
         const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
         const seconds =
           Math.floor((timeLeft % (1000 * 60)) / 1000) < 10
             ? "0" + Math.floor((timeLeft % (1000 * 60)) / 1000)
             : Math.floor((timeLeft % (1000 * 60)) / 1000);
-        this.elems.timeIndicator.innerText = `剩余有效会话时间`;
-        this.elems.time.innerText = `${minutes}:${seconds}`;
-        if (timeLeft < 0 && !app.specs.leaving) {
-          app.specs.leaving = true;
+        this.specs.expiryFormated = `${minutes}min ${seconds}sec`;
+        if (timeLeft < 0 && !this.specs.leaving) {
+          this.specs.leaving = true;
           location.reload();
         }
       }
