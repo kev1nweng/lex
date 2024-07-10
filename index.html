@@ -70,13 +70,6 @@
       >
       秘符错误或服务器不在线
     </mdui-snackbar>
-    <mdui-snackbar
-      id="pwdcopy-msg"
-      placement="top"
-      closeable
-      close-on-outside-click
-      >密码: **** 已复制到剪贴板</mdui-snackbar
-    >
     <div class="mdui-prose container-lt">
       <mdui-button
         variant="elevated"
@@ -157,12 +150,6 @@
         ></mdui-button-icon>
       </mdui-text-field>
       <div style="display: flex; gap: 12px">
-        <mdui-button-icon
-          id="copy-button"
-          variant="tonal"
-          icon="copy-all--rounded"
-          disabled
-        ></mdui-button-icon>
         <mdui-button
           id="getpwd-button"
           variant="filled"
@@ -176,8 +163,24 @@
       <h1 style="text-align: center">
         <b>关于</b><br /><br />秘符灵匣<br />Myphlex
       </h1>
+      <span
+        >Code by
+        <a style="font-weight: bold" href="https://github.com/kev1nweng">kW</a>
+        with ❤️</span
+      >
       <mdui-divider></mdui-divider>
-      <span>Version α0.1.0</span>
+      <span>Version β1.0.0-rc</span>
+      <br /><!-- <span
+        ><a
+          id="opensource"
+          href="https://github.com/kev1nweng/Myphlex"
+          style="height: 1.5em; width: 1.5em"
+      /></span>
+      <a href="https://github.com/kev1nweng/Myphlex">开源</a> -->
+      <mdui-button variant="tonal">
+        <mdui-icon id="opensource" slot="icon" name=""></mdui-icon>
+        开源仓库
+      </mdui-button>
     </div>
     <mdui-navigation-bar id="navigation-bar" label-visibility="selected">
       <mdui-navigation-bar-item icon="shield--rounded" value="authenticator"

@@ -27,7 +27,7 @@ fetch("/config.json")
   });
 
 if (!localStorage.getItem("myphlex-accent-color")?.length > 0) {
-  localStorage.setItem("myphlex-accent-color", "#666666");
+  localStorage.setItem("myphlex-accent-color", "666666");
   mdui.setColorScheme("#666666");
 } else {
   mdui.setColorScheme(localStorage.getItem("myphlex-accent-color"));
@@ -59,6 +59,7 @@ app.elems.submitButton.addEventListener("click", async () => {
     });
     app.elems.submitButton.removeAttribute("loading");
     app.elems.submitButton.removeAttribute("disabled");
+    app.elems.secretInput.value = "";
   } else {
     app.updateServerStatus(await api.ping());
     app.elems.submitButton.removeAttribute("loading");
@@ -71,9 +72,55 @@ app.elems.resubmitAction.addEventListener("click", () => {
   app.elems.submitButton.click();
 });
 
-app.elems.getpwdButton.addEventListener("click", () => {
-  app.elems.pwdcopyMsg.open = true;
-  app.elems.copyButton.removeAttribute("disabled");
+app.elems.getpwdButton.addEventListener("click", async () => {
+  app.elems.getpwdButton.setAttribute("loading", "");
+  app.elems.getpwdButton.setAttribute("disabled", "");
+  if (!app.specs.token) {
+    app.elems.getpwdButton.removeAttribute("loading");
+    app.elems.getpwdButton.removeAttribute("disabled");
+    mdui.snackbar({
+      message: "请先通过时间秘符验证",
+      closeable: true,
+      closeOnOutsideClick: true,
+      placement: "top",
+    });
+    return (app.elems.navigationBar.value = "authenticator");
+  }
+  if (await api.fetchKey(app.elems.passwordInput.value)) {
+    app.elems.getpwdButton.removeAttribute("loading");
+    app.elems.getpwdButton.removeAttribute("disabled");
+    mdui.snackbar({
+      message: `密码 ${
+        app.specs.thispwd.length <= 8
+          ? app.specs.thispwd
+          : app.specs.thispwd.slice(
+              0,
+              Math.floor((app.specs.thispwd.length - 4) / 2)
+            ) +
+            "·".repeat(
+              app.specs.thispwd.length -
+                Math.floor((app.specs.thispwd.length - 4) / 2) -
+                4
+            ) +
+            app.specs.thispwd.slice(
+              Math.floor((app.specs.thispwd.length - 4) / 2) + 4
+            )
+      } 已复制到剪贴板`,
+      closeable: true,
+      closeOnOutsideClick: true,
+      placement: "top",
+    });
+    app.elems.passwordInput.value = "";
+  } else {
+    app.elems.getpwdButton.removeAttribute("loading");
+    app.elems.getpwdButton.removeAttribute("disabled");
+    mdui.snackbar({
+      message: "密码获取失败！请检查和秘符的连接状态",
+      closeable: true,
+      closeOnOutsideClick: true,
+      placement: "top",
+    });
+  }
 });
 
 app.elems.reloadButton.addEventListener("click", async () => {

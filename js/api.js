@@ -44,17 +44,21 @@ export const api = {
   },
   async fetchKey(id) {
     // 密码获取接口
-    await fetch(`${this.url}/fetchKey?id=${id}&token=${app.specs.token}`)
-      .then((response) => response.json())
-      .then((data) => {
-        try {
-          msg.info(data.id, data.pwd);
-          // navigator.clipboard.writeText(data.pwd);
-          app.elems.loginQuery.value = data.pwd;
-        } catch (error) {
-          app.elems.errorLens.innerText = "无法访问系统剪贴板";
-        }
-      });
+    try {
+      await fetch(`${this.url}/fetchKey?id=${id}&token=${app.specs.token}`)
+        .then((response) => response.json())
+        .then((data) => {
+          try {
+            msg.info(data.id, data.pwd);
+            app.specs.thispwd = data.pwd;
+          } catch (error) {
+            throw new Error("获取密钥失败：", error);
+          }
+        });
+      return true;
+    } catch (error) {
+      return false;
+    }
   },
   async submitConfig(pwdConfigParams) {
     // 配置提交接口

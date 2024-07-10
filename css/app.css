@@ -91,3 +91,8 @@ mdui-text-field {
 #fullscreen-cover.hidden {
   opacity: 0;
 }
+
+#opensource {
+  background-image: url("/icons/github-mark.svg");
+  background-size: 100% 100%;
+}

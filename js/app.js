@@ -14,7 +14,6 @@ export const app = {
     settingsButton: document.getElementById("settings-button"),
     erudaButton: document.getElementById("eruda-button"),
     resubmitAction: document.getElementById("resubmit-action"),
-    copyButton: document.getElementById("copy-button"),
     passwordInput: document.getElementById("password-input"),
     secretInput: document.getElementById("secret-input"),
     pwdcopyMsg: document.getElementById("pwdcopy-msg"),
@@ -37,6 +36,7 @@ export const app = {
     tokenExpireTime: null,
     expiryFormated: null,
     leaving: null,
+    thispwd: null,
     isiOSDevice:
       (navigator.userAgent.includes("iPhone OS") ||
         navigator.userAgent.includes("iPad OS") ||
