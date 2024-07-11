@@ -49,7 +49,6 @@ export const api = {
         .then((response) => response.json())
         .then((data) => {
           try {
-            msg.info(data.id, data.pwd);
             app.specs.thispwd = data.pwd;
           } catch (error) {
             throw new Error("获取密钥失败：", error);

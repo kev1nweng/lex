@@ -48,6 +48,24 @@ export const app = {
       if (num < 10) return "0" + num;
       else return num;
     },
+    setClipboard: async function (text) {
+      const type = "text/plain";
+      const blob = new Blob([text], { type });
+      const data = [new ClipboardItem({ [type]: blob })];
+      try {
+        navigator.clipboard.write(data).then(
+          () => {
+            console.log("clipboard write success");
+          },
+          () => {
+            throw new Error("clipboard write failed");
+          }
+        );
+      } catch (error) {
+        return false;
+      }
+      return true;
+    },
   },
   timeAnimator() {
     if (app.specs.then) null;

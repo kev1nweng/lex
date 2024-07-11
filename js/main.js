@@ -92,27 +92,35 @@ app.elems.getpwdButton.addEventListener("click", async () => {
   if (await api.fetchKey(app.elems.passwordInput.value)) {
     app.elems.getpwdButton.removeAttribute("loading");
     app.elems.getpwdButton.removeAttribute("disabled");
-    mdui.snackbar({
-      message: `密码 ${
-        app.specs.thispwd.length <= 8
-          ? app.specs.thispwd
-          : app.specs.thispwd.slice(
-              0,
-              Math.floor((app.specs.thispwd.length - 4) / 2)
-            ) +
-            "·".repeat(
-              app.specs.thispwd.length -
-                Math.floor((app.specs.thispwd.length - 4) / 2) -
-                4
-            ) +
-            app.specs.thispwd.slice(
-              Math.floor((app.specs.thispwd.length - 4) / 2) + 4
-            )
-      } 已复制到剪贴板`,
-      closeable: true,
-      closeOnOutsideClick: true,
-      placement: "top",
-    });
+    if (await app.utils.setClipboard(app.specs.thispwd))
+      mdui.snackbar({
+        message: `密码 ${
+          app.specs.thispwd.length <= 8
+            ? app.specs.thispwd
+            : app.specs.thispwd.slice(
+                0,
+                Math.floor((app.specs.thispwd.length - 4) / 2)
+              ) +
+              "·".repeat(
+                app.specs.thispwd.length -
+                  Math.floor((app.specs.thispwd.length - 4) / 2) -
+                  4
+              ) +
+              app.specs.thispwd.slice(
+                Math.floor((app.specs.thispwd.length - 4) / 2) + 4
+              )
+        } 已复制到剪贴板`,
+        closeable: true,
+        closeOnOutsideClick: true,
+        placement: "top",
+      });
+    else
+      mdui.snackbar({
+        message: "密码复制失败。请更新您的浏览器！",
+        closeable: true,
+        closeOnOutsideClick: true,
+        placement: "top",
+      });
     app.elems.passwordInput.value = "";
   } else {
     app.elems.getpwdButton.removeAttribute("loading");
@@ -188,6 +196,18 @@ app.elems.erudaButton.addEventListener("click", async () => {
       msg.warn("//////// ERUDA ////////");
     },
   });
+});
+
+app.elems.passwordInput.addEventListener("keydown", async (evt) => {
+  if (evt.key === "Enter" || evt.keyCode === 13) {
+    app.elems.getpwdButton.click();
+  }
+});
+
+app.elems.secretInput.addEventListener("keydown", async (evt) => {
+  if (evt.key === "Enter" || evt.keyCode === 13) {
+    app.elems.submitButton.click();
+  }
 });
 
 msg.info("Init: Event listener registrations done");
