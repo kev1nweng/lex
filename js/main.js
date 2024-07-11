@@ -10,6 +10,9 @@ function updatePWATheme() {
   document.getElementById("themeColor").content = `rgb(${getComputedStyle(
     document.documentElement
   ).getPropertyValue("--mdui-color-background")})`;
+  document.getElementById("backgroundColor").content = `rgb(${getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--mdui-color-background")})`;
 }
 
 fetch("/config.json")
