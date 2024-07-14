@@ -45,7 +45,8 @@ export const api = {
   async fetchKey(id) {
     // 密码获取接口
     try {
-      await fetch(`${this.url}/fetchKey?id=${id}&token=${app.specs.token}`)
+      const hash = CryptoJS.SHA1(id.toString().toUpperCase());
+      await fetch(`${this.url}/fetchKey?id=${hash}&token=${app.specs.token}`)
         .then((response) => response.json())
         .then((data) => {
           try {
