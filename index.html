@@ -31,13 +31,19 @@
     <meta id="backgroundColor" name="background-color" content="#666666" />
     <script src="https://cdn.bootcdn.net/ajax/libs/mdui/2.1.1/mdui.global.min.js"></script>
     <script defer src="/js/main.js?v=0x0f" type="module"></script>
-    <script src="//cdn.jsdelivr.net/npm/eruda"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/eruda/3.1.0/eruda.min.js"></script>
     <script src="https://cdn.bootcdn.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   </head>
 
   <body>
     <div class="ads">广告位招租</div>
-    <mdui-card id="fullscreen-cover"></mdui-card>
+    <mdui-card id="fullscreen-cover"
+      ><!-- <div style="font-size: xx-large; font-weight: 600">请稍候</div>
+      <br /><span>第一次启动可能耗时较久 请耐心等待</span><br /><span
+        >正在加载资源</span
+      ><br
+    /> --></mdui-card
+    >
     <mdui-dialog class="mdui-prose" id="settings-dialog" close-on-overlay-click>
       <h3>自定义主题色</h3>
       <div class="dialog-line">
