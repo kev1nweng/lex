@@ -48,7 +48,7 @@
       <h3>自定义主题色</h3>
       <div class="dialog-line">
         <mdui-text-field
-          style="width: 100vw !important"
+          class="dialog-input"
           variant="outlined"
           id="settings-accent-color-input"
           label="颜色 HEX"
@@ -64,6 +64,120 @@
           variant="tonal"
           icon="done--rounded"
         ></mdui-button-icon>
+      </div>
+    </mdui-dialog>
+    <mdui-dialog class="mdui-prose" id="config-dialog">
+      <h3>秘符配置</h3>
+      <div class="dialog-line padding-sv hint">
+        您将使用一个基于当前时间的**动态数字串**登录灵匣密码器。
+        此秘符的组成数字从当前的真实时间动态提取。
+        <br />表示年月日的六位数字分别用 d1~d6 表示，
+        而表示时分秒的六位数字分别用 t1~t6 表示。
+        <br />建立规则时，您可以自由选择这些数字并使用 "-" 连接， 例如
+        "d1-d2-d3-t1-t2-t3"。
+      </div>
+      <!--       <h5 class="hint padding-sv">实时时间</h5>
+      <div class="dialog-line">
+        <h4
+          id="config-clock"
+          class="crypto padding-lv"
+          style="margin-bottom: 36px; margin-top: -48px"
+        >
+          00.00.00 00:00:00
+        </h4>
+      </div> -->
+      <div class="dialog-line padding-sv">
+        <mdui-text-field
+          class="dialog-input"
+          variant="outlined"
+          id="config-rule"
+          label="动态秘符规则"
+          helper="您登录密码器使用的规则（详见上方说明）"
+        ></mdui-text-field>
+      </div>
+      <div class="dialog-line padding-lv hint">
+        接下来您将要配置密码特征
+        ，这些特征将参与您用于各种平台的**静态密码**的生成。
+      </div>
+      <div class="dialog-line padding-sv">
+        <mdui-text-field
+          class="dialog-input"
+          variant="outlined"
+          id="config-prefix"
+          label="密码前缀"
+          helper="您密码的前缀（字母、数字）"
+          maxlength="16"
+          counter
+        ></mdui-text-field>
+      </div>
+      <div class="dialog-line padding-sv">
+        <mdui-text-field
+          class="dialog-input"
+          variant="outlined"
+          id="config-suffix"
+          label="密码后缀"
+          helper="您密码的后缀（字母、数字）"
+          maxlength="16"
+          counter
+        ></mdui-text-field>
+      </div>
+      <h4>
+        密码种子 1<br /><span class="hint"
+          >用于产生随机性的变量，您可以随意选择。</span
+        >
+      </h4>
+      <div class="dialog-line">
+        <mdui-slider
+          class="dialog-input compact"
+          variant="outlined"
+          id="config-seed1"
+          min="1"
+          max="8"
+          step="1"
+          value="3"
+          tickmarks
+        ></mdui-slider>
+      </div>
+      <h4>
+        密码种子 2<br /><span class="hint"
+          >用于产生随机性的变量，您可以随意选择。</span
+        >
+      </h4>
+      <div class="dialog-line">
+        <mdui-slider
+          class="dialog-input compact"
+          variant="outlined"
+          id="config-seed2"
+          min="1"
+          max="8"
+          step="1"
+          value="5"
+          tickmarks
+        ></mdui-slider>
+      </div>
+      <h4>
+        密码中间部分长度<br /><span class="hint"
+          >除去前后缀以及特殊符号，<br />密码中间哈希序列部分的长度。</span
+        >
+      </h4>
+      <div class="dialog-line">
+        <mdui-slider
+          class="dialog-input compact"
+          variant="outlined"
+          id="config-hashlen"
+          min="4"
+          max="36"
+          step="1"
+          value="8"
+          tickmarks
+        ></mdui-slider>
+      </div>
+      <div class="dialog-line padding-lv hint">
+        *需要更长的密码？<br />您可以在配置文件中修改该数值。
+      </div>
+      <div class="dialog-line padding-lv to-right">
+        <mdui-button id="config-cancel-button" variant="text">取消</mdui-button>
+        <mdui-button id="config-apply-button">应用设置</mdui-button>
       </div>
     </mdui-dialog>
     <mdui-snackbar
@@ -102,6 +216,12 @@
           variant=""
           id="eruda-button"
           icon="code--rounded"
+          style="display: none"
+        ></mdui-button-icon>
+        <mdui-button-icon
+          variant=""
+          id="config-button"
+          icon="settings--rounded"
         ></mdui-button-icon>
       </div>
     </mdui-card>

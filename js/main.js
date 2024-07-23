@@ -23,6 +23,15 @@ fetch("/config.json")
     (async () => {
       if (await api.ping()) {
         app.updateServerStatus(true);
+        if (!app.specs.setup) {
+          mdui.snackbar({
+            message: "您似乎是第一次使用秘符灵匣！请进行配置",
+            closeable: true,
+            closeOnOutsideClick: true,
+            placement: "top",
+          });
+          app.elems.configDialog.open = true;
+        }
       } else {
         app.updateServerStatus(false);
       }
@@ -196,6 +205,48 @@ app.elems.erudaButton.addEventListener("click", async () => {
       msg.warn("//////// ERUDA ////////");
     },
   });
+});
+
+app.elems.configButton.addEventListener("click", () => {
+  app.elems.configDialog.open = app.elems.configDialog.open ? false : true;
+});
+
+app.elems.configCancelButton.addEventListener("click", () => {
+  app.elems.configDialog.open = false;
+});
+
+app.elems.configApplyButton.addEventListener("click", async () => {
+  app.elems.configApplyButton.setAttribute("loading", "");
+  app.elems.configApplyButton.setAttribute("disabled", "");
+  if (
+    await api.submitConfig({
+      rule: app.elems.configRule.value,
+      prefix: app.elems.configPrefix.value,
+      suffix: app.elems.configSuffix.value,
+      hashLength: app.elems.configHashlen.value,
+      seed1: app.elems.configSeed1.value,
+      seed2: app.elems.configSeed2.value,
+    })
+  ) {
+    mdui.snackbar({
+      message: "配置应用成功！",
+      closeable: true,
+      closeOnOutsideClick: true,
+      placement: "top",
+    });
+    app.elems.configApplyButton.removeAttribute("loading");
+    app.elems.configApplyButton.removeAttribute("disabled");
+  } else {
+    mdui.snackbar({
+      message:
+        "配置应用失败！服务器是否不在线？若您不是第一次进行设置，您是否尚未通过秘符验证？",
+      closeable: true,
+      closeOnOutsideClick: true,
+      placement: "top",
+    });
+    app.elems.configApplyButton.removeAttribute("loading");
+    app.elems.configApplyButton.removeAttribute("disabled");
+  }
 });
 
 app.elems.passwordInput.addEventListener("keydown", async (evt) => {

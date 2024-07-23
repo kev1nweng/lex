@@ -6,13 +6,24 @@ export const app = {
     fullscreenCover: document.getElementById("fullscreen-cover"),
     navigationBar: document.getElementById("navigation-bar"),
     settingsDialog: document.getElementById("settings-dialog"),
+    configDialog: document.getElementById("config-dialog"),
     passwordTab: document.getElementById("password-tab"),
     aboutTab: document.getElementById("about-tab"),
     authenticatorTab: document.getElementById("authenticator-tab"),
     clock: document.getElementById("clock"),
+    configClock: document.getElementById("config-clock"),
+    configRule: document.getElementById("config-rule"),
+    configPrefix: document.getElementById("config-prefix"),
+    configSuffix: document.getElementById("config-suffix"),
+    configSeed1: document.getElementById("config-seed1"),
+    configSeed2: document.getElementById("config-seed2"),
+    configHashlen: document.getElementById("config-hashlen"),
     reloadButton: document.getElementById("reload-button"),
     settingsButton: document.getElementById("settings-button"),
     erudaButton: document.getElementById("eruda-button"),
+    configButton: document.getElementById("config-button"),
+    configCancelButton: document.getElementById("config-cancel-button"),
+    configApplyButton: document.getElementById("config-apply-button"),
     resubmitAction: document.getElementById("resubmit-action"),
     passwordInput: document.getElementById("password-input"),
     secretInput: document.getElementById("secret-input"),
@@ -42,6 +53,8 @@ export const app = {
         navigator.userAgent.includes("iPad OS") ||
         navigator.userAgent.includes("Mac OS X")) &&
       (!navigator.userAgent.includes("Mac OS X") || true), // debug
+    hash: null,
+    setup: false,
   },
   utils: {
     to2Digits: function (num) {

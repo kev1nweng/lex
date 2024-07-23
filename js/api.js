@@ -8,9 +8,11 @@ export const api = {
   async ping() {
     try {
       await fetch(`${this.url}/ping`)
-        .then((response) =>
-          msg.info(`Ping recv from myth with code ${response.status}`)
-        )
+        .then((response) => response.json())
+        .then((data) => {
+          app.specs.hash = data.fingerprint;
+          app.specs.setup = JSON.parse(data.setup);
+        })
         .catch((e) => {
           throw new Error("Ping failed with", e);
         });
@@ -60,15 +62,22 @@ export const api = {
       return false;
     }
   },
-  async submitConfig(pwdConfigParams) {
+  async submitConfig(query) {
     // 配置提交接口
-    await fetch(
-      `${this.url}/submitConfig?rule=${pwdConfigParams.dateTimeRule}&prefix=${pwdConfigParams.prefix}&hashlength=${pwdConfigParams.hashLength}&s1s=${pwdConfigParams.seed1Segment}&s2s=${pwdConfigParams.seed2Segment}&suffix=${pwdConfigParams.suffix}`
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        msg.info(data);
-      });
+    try {
+      await fetch(
+        `${this.url}/submitConfig?rule=${query.rule}&prefix=${query.prefix}&hashlength=${query.hashLength}&s1s=${query.seed1}&s2s=${query.seed2}&suffix=${query.suffix}&token=${app.specs.token}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          msg.info(data);
+        })
+        .catch((e) => {
+          throw new Error("Failed to apply configuration: ", e);
+        });
+    } catch (error) {
+      return false;
+    }
     return true;
   },
   async getServerConfigStatus() {

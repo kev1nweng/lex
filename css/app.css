@@ -72,6 +72,35 @@ mdui-text-field {
   gap: 12px;
 }
 
+.dialog-input {
+  width: 100vw !important;
+}
+
+.padding-sv {
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.padding-lv {
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.compact {
+  margin-top: -12px !important;
+}
+
+.hint {
+  color: gray;
+  font-size: small;
+}
+
+.to-right {
+  text-align: right;
+  justify-content: end;
+  float: right;
+}
+
 .crypto {
   font-family: 'JetBrains Mono', 'Consolas', 'Menlo', 'Courier New', monospace;
 }
@@ -101,4 +130,8 @@ mdui-text-field {
 #opensource {
   background-image: url("/icons/github-mark.svg");
   background-size: 100% 100%;
+}
+
+#config-dialog {
+  max-height: 100vh;
 }
