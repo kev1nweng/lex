@@ -234,6 +234,7 @@ app.elems.configApplyButton.addEventListener("click", async () => {
       closeOnOutsideClick: true,
       placement: "top",
     });
+    app.elems.configDialog.open = false;
     app.elems.configApplyButton.removeAttribute("loading");
     app.elems.configApplyButton.removeAttribute("disabled");
   } else {
