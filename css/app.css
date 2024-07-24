@@ -133,5 +133,5 @@ mdui-text-field {
 }
 
 #config-dialog {
-  max-height: 100vh;
+  padding: 0;
 }
