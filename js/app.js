@@ -68,13 +68,14 @@ export const app = {
       try {
         navigator.clipboard.write(data).then(
           () => {
-            console.log("clipboard write success");
+            msg.info("Clipboard: write success");
           },
           () => {
-            throw new Error("clipboard write failed");
+            throw new Error("Clipboard: write failed");
           }
         );
       } catch (error) {
+        msg.error(error.message);
         return false;
       }
       return true;
