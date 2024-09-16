@@ -8,7 +8,8 @@
 }
 
 html {
-  font-family: 'MiSans';
+  font-family: system-ui, sans-serif;
+  font-weight: normal;
   -webkit-user-drag: none;
   user-select: none;
   -webkit-user-select: none;
@@ -102,7 +103,21 @@ mdui-text-field {
 }
 
 .crypto {
-  font-family: 'JetBrains Mono', 'Consolas', 'Menlo', 'Courier New', monospace;
+  font-family: ui-monospace,
+    'Cascadia Code',
+    'Source Code Pro',
+    Menlo,
+    Consolas,
+    'DejaVu Sans Mono',
+    monospace;
+}
+
+.inline-logo {
+  padding-left: 2px;
+  padding-right: 2px;
+  display: inline-block;
+  height: 1em;
+  width: auto;
 }
 
 #fullscreen-cover {
@@ -132,6 +147,8 @@ mdui-text-field {
   background-size: 100% 100%;
 }
 
-#config-dialog {
-  padding: 0;
+@media (prefers-color-scheme: dark) {
+  .inline-logo {
+    filter: invert(1);
+  }
 }

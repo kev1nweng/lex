@@ -7,6 +7,7 @@ export const app = {
     navigationBar: document.getElementById("navigation-bar"),
     settingsDialog: document.getElementById("settings-dialog"),
     configDialog: document.getElementById("config-dialog"),
+    overridesDialog: document.getElementById("overrides-dialog"),
     passwordTab: document.getElementById("password-tab"),
     aboutTab: document.getElementById("about-tab"),
     authenticatorTab: document.getElementById("authenticator-tab"),
@@ -20,10 +21,12 @@ export const app = {
     configHashlen: document.getElementById("config-hashlen"),
     reloadButton: document.getElementById("reload-button"),
     settingsButton: document.getElementById("settings-button"),
+    overridesButton: document.getElementById("overrides-button"),
     erudaButton: document.getElementById("eruda-button"),
     configButton: document.getElementById("config-button"),
     configCancelButton: document.getElementById("config-cancel-button"),
     configApplyButton: document.getElementById("config-apply-button"),
+    overridesExitButton: document.getElementById("overrides-exit-button"),
     resubmitAction: document.getElementById("resubmit-action"),
     passwordInput: document.getElementById("password-input"),
     secretInput: document.getElementById("secret-input"),
@@ -114,7 +117,7 @@ export const app = {
               this.specs.expiryFormated = null;
               this.updateServerStatus(await api.ping());
               mdui.snackbar({
-                message: "会话已注销",
+                message: "会话现在处于注销状态",
                 closeable: true,
                 closeOnOutsideClick: true,
                 placement: "top",

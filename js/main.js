@@ -215,6 +215,22 @@ app.elems.configCancelButton.addEventListener("click", () => {
   app.elems.configDialog.open = false;
 });
 
+app.elems.overridesButton.addEventListener("click", () => {
+  mdui.alert({
+    headline: "秘符覆写",
+    description:
+      "该功能尚未完成开发。您即将打开一个测试页面，用于预览尚未完成的功能。部分或所有功能可能无法正常工作。",
+    confirmText: "继续",
+    onConfirm: async () => {
+      app.elems.overridesDialog.open = true;
+    },
+  });
+});
+
+app.elems.overridesExitButton.addEventListener("click", () => {
+  app.elems.overridesDialog.open = false;
+});
+
 app.elems.configApplyButton.addEventListener("click", async () => {
   app.elems.configApplyButton.setAttribute("loading", "");
   app.elems.configApplyButton.setAttribute("disabled", "");
@@ -265,7 +281,7 @@ app.elems.secretInput.addEventListener("keydown", async (evt) => {
 msg.info("Init: Event listener registrations done");
 
 if (app.specs.isiOSDevice) {
-  msg.info("Init: iOS detected, adjusting layout");
+  msg.info("Init: iOS device detected, adjusting layout");
   app.elems.navigationBar.style.marginBottom = "22px";
   app.elems.navigationBar.style.boxShadow = "none";
   app.elems.navigationBar.style.borderTop = "1px solid #8686863f";
@@ -274,3 +290,36 @@ if (app.specs.isiOSDevice) {
 updatePWATheme();
 
 msg.info("Init: UI customizations done");
+
+// Keyboard shortcuts
+window.addEventListener("keydown", (evt) => {
+  // msg.info(`keydown: ${evt.keyCode}`);
+  switch (evt.keyCode) {
+    case 219:
+      app.elems.navigationBar.value = "authenticator";
+      break;
+    case 221:
+      app.elems.navigationBar.value = "password";
+      break;
+    case 220:
+      app.elems.navigationBar.value = "about";
+      break;
+    case 192:
+      switch (app.elems.navigationBar.value) {
+        case "authenticator":
+          app.elems.secretInput.focus();
+          evt.preventDefault();
+          break;
+        case "password":
+          app.elems.passwordInput.focus();
+          evt.preventDefault();
+          break;
+        default:
+          break;
+      }
+    default:
+      break;
+  }
+});
+
+msg.info("Init: Keyboard shortcuts registered");

@@ -3,7 +3,9 @@ import { msg } from "./msg.js";
 
 export const api = {
   get url() {
-    return app.specs.host;
+    return location.host.includes("localhost")
+      ? "http://localhost:4518"
+      : app.specs.host;
   },
   async ping() {
     try {
@@ -74,6 +76,37 @@ export const api = {
         })
         .catch((e) => {
           throw new Error("Failed to apply configuration: ", e);
+        });
+    } catch (error) {
+      return false;
+    }
+    return true;
+  },
+  async submitOverrides(arr) {
+    let payloadArr = [];
+    arr.forEach((obj) => {
+      payloadArr.push(
+        `${obj.type == "symlink" ? "s" : "p"}*${obj.origin}*${
+          obj.type == "symlink" ? obj.target : obj.content
+        }`
+      );
+    });
+
+    let paylaodStr = "";
+    payloadArr.forEach((item) => {
+      paylaodStr += paylaodStr.length == 0 ? item : `&${item}`;
+    });
+
+    try {
+      await fetch(
+        `${this.url}/submitOverrides?token=${app.specs.token}&payloads=${paylaodStr}`
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          msg.info(data);
+        })
+        .catch((e) => {
+          throw new Error("Failed to apply overrides: ", e);
         });
     } catch (error) {
       return false;

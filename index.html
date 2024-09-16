@@ -9,30 +9,20 @@
     <title>秘符灵匣 Myphlex</title>
     <link rel="manifest" href="manifest.json" />
     <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdui/2.1.1/mdui.min.css"
+      href="https://s4.zstatic.net/ajax/libs/mdui/2.1.1/mdui.min.css"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/app.css?v=0x11" />
-    <link
-      rel="stylesheet"
-      crossorigin="anonymous"
-      href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Medium.min.css"
-    />
-    <link
-      rel="stylesheet"
-      crossorigin="anonymous"
-      href="https://cdn.jsdelivr.net/npm/misans@4.0.0/lib/Normal/MiSans-Bold.min.css"
-    />
     <link
       href="https://fonts.font.im/icon?family=Material+Icons+Round"
       rel="stylesheet"
     />
     <meta id="themeColor" name="theme-color" content="#666666" />
     <meta id="backgroundColor" name="background-color" content="#666666" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdui/2.1.1/mdui.global.min.js"></script>
+    <script src="https://s4.zstatic.net/ajax/libs/mdui/2.1.1/mdui.global.min.js"></script>
     <script defer src="js/main.js?v=0x11" type="module"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/eruda/3.2.1/eruda.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <script src="https://s4.zstatic.net/ajax/libs/eruda/3.2.1/eruda.min.js"></script>
+    <script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
   </head>
 
   <body>
@@ -64,6 +54,54 @@
           variant="tonal"
           icon="done--rounded"
         ></mdui-button-icon>
+      </div>
+    </mdui-dialog>
+    <mdui-dialog
+      class="mdui-prose"
+      id="overrides-dialog"
+      close-on-esc
+      fullscreen
+    >
+      <h3>秘符覆写</h3>
+      <div class="dialog-line padding-sv hint">
+        您可以在这里对特定特定平台的密码进行修改，或将一个密码ID链接到另一个。<br />
+      </div>
+      <h4>
+        已有条目
+        <br /><span class="hint"
+          >您可以在这里浏览并管理已经存在的覆写条目。</span
+        >
+      </h4>
+      <div class="dialog-line padding-sv hint" style="color: crimson">
+        这里现在没有内容。<br />
+      </div>
+      <h4>
+        创建新条目
+        <br /><span class="hint"
+          >您可以在这里创建新的覆写条目。请选择一个覆写类型并制定一个源和一个目标。</span
+        >
+      </h4>
+      <mdui-radio-group value="symlink">
+        <mdui-radio value="symlink">链接</mdui-radio>
+        <mdui-radio value="patch">补丁</mdui-radio>
+      </mdui-radio-group>
+      <div class="dialog-line padding-sv">
+        <mdui-text-field
+          class="dialog-input"
+          variant="outlined"
+          id="overrides-origin-input"
+          label="源"
+        ></mdui-text-field>
+        →
+        <mdui-text-field
+          class="dialog-input"
+          variant="outlined"
+          id="overrides-target-input"
+          label="目标"
+        ></mdui-text-field>
+      </div>
+      <div class="to-right padding-lv">
+        <mdui-button id="overrides-exit-button">退出</mdui-button>
       </div>
     </mdui-dialog>
     <mdui-dialog class="mdui-prose" id="config-dialog" fullscreen close-on-esc>
@@ -200,7 +238,7 @@
         >秘符：正在连接</mdui-button
       >
     </div>
-    <mdui-card variant="elevated">
+    <mdui-card>
       <div class="mdui-prose container-rt">
         <mdui-button-icon
           id="reload-button"
@@ -209,14 +247,14 @@
         ></mdui-button-icon>
         <mdui-button-icon
           variant=""
-          id="settings-button"
-          icon="colorize--rounded"
-        ></mdui-button-icon>
-        <mdui-button-icon
-          variant=""
           id="eruda-button"
           icon="code--rounded"
           style="display: none"
+        ></mdui-button-icon>
+        <mdui-button-icon
+          variant=""
+          id="overrides-button"
+          icon="menu_open--rounded"
         ></mdui-button-icon>
         <mdui-button-icon
           variant=""
@@ -292,11 +330,14 @@
       </h1>
       <span
         >Coded by
-        <a style="font-weight: bold" href="https://github.com/kev1nweng">kW</a>
-        with ❤️</span
+        <img
+          href="https://github.com/kev1nweng"
+          src="./icons/logo.svg"
+          class="inline-logo"
+        />&nbsp;with ❤️</span
       >
       <mdui-divider></mdui-divider>
-      <span>Version δ1.1.0</span>
+      <span id="version">Version ɑ1.2.0</span>
       <br /><!-- <span
         ><a
           id="opensource"
@@ -304,6 +345,13 @@
           style="height: 1.5em; width: 1.5em"
       /></span>
       <a href="https://github.com/kev1nweng/Myphlex">开源</a> -->
+      <mdui-button
+        variant="outlined"
+        id="settings-button"
+        icon="colorize--rounded"
+        style="margin-bottom: 12px; margin-top: 12px"
+        >修改颜色</mdui-button
+      >
       <mdui-button variant="tonal" href="https://github.com/kev1nweng/Myphlex">
         <mdui-icon id="opensource" slot="icon" name=""></mdui-icon>
         开源仓库
