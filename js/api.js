@@ -92,7 +92,7 @@ export const api = {
       );
     });
 
-    let paylaodStr = "";
+    let payloadStr = "";
     payloadArr.forEach((item) => {
       paylaodStr += paylaodStr.length == 0 ? item : `&${item}`;
     });

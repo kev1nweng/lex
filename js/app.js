@@ -3,6 +3,8 @@ import { msg } from "./msg.js";
 
 export const app = {
   elems: {
+    copyButton: document.getElementById("copy-button"),
+    copyInput: document.getElementById("copy-input"),
     fullscreenCover: document.getElementById("fullscreen-cover"),
     navigationBar: document.getElementById("navigation-bar"),
     settingsDialog: document.getElementById("settings-dialog"),
@@ -65,6 +67,8 @@ export const app = {
       else return num;
     },
     setClipboard: async function (text) {
+      // 旧实现
+      /*
       const type = "text/plain";
       const blob = new Blob([text], { type });
       const data = [new ClipboardItem({ [type]: blob })];
@@ -82,6 +86,10 @@ export const app = {
         return false;
       }
       return true;
+      */
+      // 新实现
+      app.elems.copyInput.value = text;
+      app.elems.copyButton.click();
     },
   },
   timeAnimator() {

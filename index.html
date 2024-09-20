@@ -23,9 +23,17 @@
     <script defer src="js/main.js?v=0x11" type="module"></script>
     <script src="https://s4.zstatic.net/ajax/libs/eruda/3.2.1/eruda.min.js"></script>
     <script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
   </head>
 
   <body>
+    <a id="copy-button" class="proxy" data-clipboard-target="#copy-input"></a>
+    <input
+      id="copy-input"
+      type="text"
+      class="proxy"
+      data-clipboard-action="cut"
+    />
     <div class="ads">广告位招租</div>
     <mdui-card id="fullscreen-cover"
       ><!-- <div style="font-size: xx-large; font-weight: 600">请稍候</div>
@@ -337,7 +345,9 @@
         />&nbsp;with ❤️</span
       >
       <mdui-divider></mdui-divider>
-      <span id="version">Version ɑ1.2.0</span>
+      <span id="version"
+        >Version 1.2.0 <span id="subversion" class="crypto">[ɑ2]</span></span
+      >
       <br /><!-- <span
         ><a
           id="opensource"

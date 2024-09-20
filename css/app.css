@@ -120,6 +120,15 @@ mdui-text-field {
   width: auto;
 }
 
+.proxy {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  pointer-events: none;
+  z-index: -114514;
+}
+
 #fullscreen-cover {
   display: flex;
   flex-direction: column;
@@ -145,6 +154,11 @@ mdui-text-field {
 #opensource {
   background-image: url("/icons/github-mark.svg");
   background-size: 100% 100%;
+}
+
+#subversion {
+  color: grey;
+  font-size: small;
 }
 
 @media (prefers-color-scheme: dark) {

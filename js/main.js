@@ -3,7 +3,7 @@ import { api } from "./api.js";
 import { msg } from "./msg.js";
 
 requestAnimationFrame(app.timeAnimator);
-// const clipboard = new ClipboardJS("#copy-button");
+const clipboard = new ClipboardJS("#copy-button");
 
 // MDUI Initialization
 function updatePWATheme() {
@@ -101,35 +101,28 @@ app.elems.getpwdButton.addEventListener("click", async () => {
   if (await api.fetchKey(app.elems.passwordInput.value)) {
     app.elems.getpwdButton.removeAttribute("loading");
     app.elems.getpwdButton.removeAttribute("disabled");
-    if (await app.utils.setClipboard(app.specs.thispwd))
-      mdui.snackbar({
-        message: `密码 ${
-          app.specs.thispwd.length <= 8
-            ? app.specs.thispwd
-            : app.specs.thispwd.slice(
-                0,
-                Math.floor((app.specs.thispwd.length - 4) / 2)
-              ) +
-              "·".repeat(
-                app.specs.thispwd.length -
-                  Math.floor((app.specs.thispwd.length - 4) / 2) -
-                  4
-              ) +
-              app.specs.thispwd.slice(
-                Math.floor((app.specs.thispwd.length - 4) / 2) + 4
-              )
-        } 已复制到剪贴板`,
-        closeable: true,
-        closeOnOutsideClick: true,
-        placement: "top",
-      });
-    else
-      mdui.snackbar({
-        message: "密码复制失败。请更新您的浏览器！",
-        closeable: true,
-        closeOnOutsideClick: true,
-        placement: "top",
-      });
+    await app.utils.setClipboard(app.specs.thispwd);
+    mdui.snackbar({
+      message: `密码 ${
+        app.specs.thispwd.length <= 8
+          ? app.specs.thispwd
+          : app.specs.thispwd.slice(
+              0,
+              Math.floor((app.specs.thispwd.length - 4) / 2)
+            ) +
+            "·".repeat(
+              app.specs.thispwd.length -
+                Math.floor((app.specs.thispwd.length - 4) / 2) -
+                4
+            ) +
+            app.specs.thispwd.slice(
+              Math.floor((app.specs.thispwd.length - 4) / 2) + 4
+            )
+      } 已复制到剪贴板`,
+      closeable: true,
+      closeOnOutsideClick: true,
+      placement: "top",
+    });
     app.elems.passwordInput.value = "";
   } else {
     app.elems.getpwdButton.removeAttribute("loading");
@@ -323,3 +316,33 @@ window.addEventListener("keydown", (evt) => {
 });
 
 msg.info("Init: Keyboard shortcuts registered");
+
+clipboard.on("success", function (e) {
+  e.clearSelection();
+});
+
+clipboard.on("error", function (e) {
+  mdui.alert({
+    headline: "错误",
+    description: `未能将密码写入设备剪贴板。请尝试升级您的浏览器，或者更换设备重试。秘符灵匣将尝试显示您的密码用于手动输入：${e.text}`,
+    confirmText: "退出",
+    onConfirm: async () => {
+      location.reload();
+    },
+  });
+  msg.error(e);
+});
+
+try {
+  ClipboardJS, CryptoJS, eruda;
+} catch (e) {
+  mdui.alert({
+    headline: "致命错误",
+    description: "部分组件未正常加载，因此秘符灵匣无法继续运行。",
+    confirmText: "重新加载",
+    onConfirm: async () => {
+      location.reload();
+    },
+  });
+  msg.error(e);
+}
