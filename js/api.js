@@ -94,12 +94,12 @@ export const api = {
 
     let payloadStr = "";
     payloadArr.forEach((item) => {
-      paylaodStr += paylaodStr.length == 0 ? item : `&${item}`;
+      payloadStr += payloadStr.length == 0 ? item : `&${item}`;
     });
 
     try {
       await fetch(
-        `${this.url}/submitOverrides?token=${app.specs.token}&payloads=${paylaodStr}`
+        `${this.url}/submitOverrides?token=${app.specs.token}&payloads=${payloadStr}`
       )
         .then((response) => response.json())
         .then((data) => {

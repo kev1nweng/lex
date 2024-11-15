@@ -146,9 +146,6 @@ app.elems.reloadButton.addEventListener("click", async () => {
       msg.error("//////// RELOAD ////////");
       setTimeout(() => window.location.reload(), 500);
     },
-    onCancel: () => {
-      return;
-    },
   });
 });
 
@@ -169,7 +166,7 @@ app.elems.passwordInput.addEventListener("input", () => {
 });
 
 app.elems.settingsButton.addEventListener("click", () => {
-  app.elems.settingsDialog.open = app.elems.settingsDialog.open ? false : true;
+  app.elems.settingsDialog.open = !app.elems.settingsDialog.open;
 });
 
 app.elems.setttingsAccentColorButton.addEventListener("click", () => {
