@@ -24,6 +24,23 @@
     <script src="https://s4.zstatic.net/ajax/libs/eruda/3.2.1/eruda.min.js"></script>
     <script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
     <script src="https://s4.zstatic.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", () => {
+          navigator.serviceWorker.register("./sw.js").then(
+            (registration) => {
+              console.log(
+                "ServiceWorker registration successful with scope: ",
+                registration.scope
+              );
+            },
+            (err) => {
+              console.log("ServiceWorker registration failed: ", err);
+            }
+          );
+        });
+      }
+    </script>
   </head>
 
   <body>
@@ -346,7 +363,7 @@
       >
       <mdui-divider></mdui-divider>
       <span id="version"
-        >Version 1.2.0 <span id="subversion" class="crypto">[ɑ4]</span></span
+        >Version 1.2.0 <span id="subversion" class="crypto">[ɑ5]</span></span
       >
       <br /><!-- <span
         ><a
