@@ -345,3 +345,4 @@ clipboard.on("error", function (e) {
   msg.error(e);
 });
 
+document.body.style.overflow = "hidden";  // Prevent scrolling

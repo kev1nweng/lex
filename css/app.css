@@ -8,6 +8,7 @@
 }
 
 html {
+  overflow: hidden !important;
   font-family: system-ui, sans-serif;
   font-weight: normal;
   -webkit-user-drag: none;
