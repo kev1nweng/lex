@@ -61,6 +61,7 @@ export const api = {
         });
       return true;
     } catch (error) {
+      msg.error(error);
       return false;
     }
   },
@@ -109,6 +110,7 @@ export const api = {
           throw new Error("Failed to apply overrides: ", e);
         });
     } catch (error) {
+      msg.error(error);
       return false;
     }
     return true;

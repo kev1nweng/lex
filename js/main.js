@@ -3,7 +3,20 @@ import { api } from "./api.js";
 import { msg } from "./msg.js";
 
 requestAnimationFrame(app.timeAnimator);
-const clipboard = new ClipboardJS("#copy-button");
+
+try {
+  ClipboardJS, CryptoJS, eruda;
+} catch (e) {
+  mdui.alert({
+    headline: "致命错误",
+    description: "部分组件未正常加载，因此秘符灵匣无法继续运行。",
+    confirmText: "重新加载",
+    onConfirm: async () => {
+      location.reload();
+    },
+  });
+  msg.error(e);
+}
 
 // MDUI Initialization
 function updatePWATheme() {
@@ -314,6 +327,8 @@ window.addEventListener("keydown", (evt) => {
 
 msg.info("Init: Keyboard shortcuts registered");
 
+const clipboard = new ClipboardJS("#copy-button");
+
 clipboard.on("success", function (e) {
   e.clearSelection();
 });
@@ -330,16 +345,3 @@ clipboard.on("error", function (e) {
   msg.error(e);
 });
 
-try {
-  ClipboardJS, CryptoJS, eruda;
-} catch (e) {
-  mdui.alert({
-    headline: "致命错误",
-    description: "部分组件未正常加载，因此秘符灵匣无法继续运行。",
-    confirmText: "重新加载",
-    onConfirm: async () => {
-      location.reload();
-    },
-  });
-  msg.error(e);
-}
