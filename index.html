@@ -24,7 +24,7 @@
     <script src="https://s4.zstatic.net/ajax/libs/eruda/3.2.1/eruda.min.js"></script>
     <script src="https://s4.zstatic.net/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
     <script src="https://s4.zstatic.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
-    <script>
+    <!-- <script>
       if ("serviceWorker" in navigator) {
         window.addEventListener("load", () => {
           navigator.serviceWorker.register("./sw.js").then(
@@ -40,7 +40,7 @@
           );
         });
       }
-    </script>
+    </script> -->
   </head>
 
   <body>
@@ -132,12 +132,14 @@
     <mdui-dialog class="mdui-prose" id="config-dialog" fullscreen close-on-esc>
       <h3>秘符配置</h3>
       <div class="dialog-line padding-sv hint">
-        您将使用一个基于当前时间的**动态数字串**登录灵匣密码器。
+        您将使用一个基于当前时间的动态数字串登录灵匣密码器。
         此秘符的组成数字从当前的真实时间动态提取。
         <br />表示年月日的六位数字分别用 d1~d6 表示，
         而表示时分秒的六位数字分别用 t1~t6 表示。
         <br />建立规则时，您可以自由选择这些数字并使用 "-" 连接， 例如
-        "d1-d2-d3-t1-t2-t3"。
+        "d3-d2-d1-t3-t2-t1"。 <br /><br />例如，假设现在是 2025 年 2 月 13 日 15
+        点 10 分 05 秒（即实时日期显示为 25.02.13 15:10:05）。<br />如果您设置的动态密码规则是
+        d3-d2-d1-t3-t2-t1, 则您这个时刻的动态密码为：052151
       </div>
       <!--       <h5 class="hint padding-sv">实时时间</h5>
       <div class="dialog-line">
@@ -160,7 +162,7 @@
       </div>
       <div class="dialog-line padding-lv hint">
         接下来您将要配置密码特征
-        ，这些特征将参与您用于各种平台的**静态密码**的生成。
+        ，这些特征将参与您用于各种平台的静态密码的生成。
       </div>
       <div class="dialog-line padding-sv">
         <mdui-text-field
@@ -186,7 +188,7 @@
       </div>
       <h4>
         密码种子 1<br /><span class="hint"
-          >用于产生随机性的变量，您可以随意选择。</span
+          >用于产生真随机性的一个数字，您可以拖动滑条任意选择，仅用于增强安全性。</span
         >
       </h4>
       <div class="dialog-line">
@@ -203,7 +205,7 @@
       </div>
       <h4>
         密码种子 2<br /><span class="hint"
-          >用于产生随机性的变量，您可以随意选择。</span
+          >用于产生真随机性的另一个数字，您可以拖动滑条任意选择，仅用于增强安全性。</span
         >
       </h4>
       <div class="dialog-line">
@@ -220,7 +222,7 @@
       </div>
       <h4>
         密码中间部分长度<br /><span class="hint"
-          >除去前后缀以及特殊符号，<br />密码中间哈希序列部分的长度。</span
+          >除去前后缀以及特殊符号，密码中间部分的长度。</span
         >
       </h4>
       <div class="dialog-line">
@@ -363,7 +365,7 @@
       >
       <mdui-divider></mdui-divider>
       <span id="version"
-        >Version 1.2.0 <span id="subversion" class="crypto">[ɑ6]</span></span
+        >Version 1.2.0 <span id="subversion" class="crypto">[ɑ7]</span></span
       >
       <br /><!-- <span
         ><a
